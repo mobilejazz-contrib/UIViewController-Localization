@@ -10,16 +10,16 @@
 
 @implementation UIViewController (Localization)
 
-- (void)swizzled_viewDidLoad
+- (void)mj_swizzled_viewDidLoad
 {
-    [self swizzled_viewDidLoad];
+    [self mj_swizzled_viewDidLoad];
     
     //Localize every subview
-    [self localizeSubviewsOfView:self.view];
+    [self mj_localizeSubviewsOfView:self.view];
     
 }
 
--(void) localizeView:(UIView *)view
+-(void) mj_localizeView:(UIView *)view
 {
     if( [view isKindOfClass:[UIButton class]] )
     {
@@ -42,20 +42,17 @@
     }
 }
 
-- (void)localizeSubviewsOfView:(UIView *)view
+- (void)mj_localizeSubviewsOfView:(UIView *)view
 {
-    [self localizeView:view];
+    [self mj_localizeView:view];
     
     // Get the subviews of the view
     NSArray *subviews = [view subviews];
     
-    // Return if there are no subviews
-    if ([subviews count] == 0) return;
-    
     for (UIView *subview in subviews) {
         
         // Localize subviews
-        [self localizeSubviewsOfView:subview];
+        [self mj_localizeSubviewsOfView:subview];
     }
 }
 
@@ -68,8 +65,8 @@
     
     // Get the "- (id)viewDidLoad:" method.
     original = class_getInstanceMethod(self, @selector(viewDidLoad));
-    // Get the "- (id)swizzled_viewDidLoad:" method.
-    swizzle = class_getInstanceMethod(self, @selector(swizzled_viewDidLoad));
+    // Get the "- (id)mj_swizzled_viewDidLoad:" method.
+    swizzle = class_getInstanceMethod(self, @selector(mj_swizzled_viewDidLoad));
     // Swap their implementations.
     method_exchangeImplementations(original, swizzle);
     
